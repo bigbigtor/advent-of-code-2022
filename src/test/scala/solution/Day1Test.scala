@@ -9,6 +9,10 @@ class Day1Test extends FunSuite {
   private val input = Source.fromResource("day1.txt").mkString
 
   test("Day 1 part 1 is solved correctly") {
-    assertEquals(66306, day1.part1(input))
+    assertEquals(day1.part1(input), 66306)
+  }
+
+  test("Day 2 part 2 is solved correctly") {
+    assertEquals(day1.part2(input), 195292)
   }
 }
