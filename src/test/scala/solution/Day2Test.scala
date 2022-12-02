@@ -12,4 +12,8 @@ class Day2Test extends FunSuite {
   test("Day 2 part 1 is solved correctly") {
     assertEquals(day2.part1(input), 11386)
   }
+
+  test("Day 2 part 2 is solved correctly") {
+    assertEquals(day2.part2(input), 13600)
+  }
 }
