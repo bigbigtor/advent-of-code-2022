@@ -10,9 +10,8 @@ class RucksackDuplicateTypePriorityAggregator {
 
   def getSumOfPriorities(rucksacks: Array[Rucksack]): Int =
     rucksacks.map(rucksack => {
-      val firstCompartmentSet = rucksack.firstCompartmentItems.distinctBy(_.itemType).map(_.itemType).toSet
-      val secondCompartmentSet = rucksack.secondCompartmentItems.distinctBy(_.itemType).map(_.itemType).toSet
-      val itemsIntersection = firstCompartmentSet.intersect(secondCompartmentSet).head
-      Item(itemsIntersection)
+      val firstCompartmentSet = rucksack.firstCompartmentItems.toSet
+      val secondCompartmentSet = rucksack.secondCompartmentItems.toSet
+      firstCompartmentSet.intersect(secondCompartmentSet).head
     }).map(converter.convert).sum
 }

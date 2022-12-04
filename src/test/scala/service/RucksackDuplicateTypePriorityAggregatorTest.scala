@@ -25,8 +25,8 @@ class RucksackDuplicateTypePriorityAggregatorTest extends FunSuite {
       .split("\\n")
       .map(
         line => {
-          val firstCompartmentItems = line.substring(0, line.length / 2).map(Item(_)).toList
-          val secondCompartmentItems = line.substring(line.length / 2).map(Item(_)).toList
+          val firstCompartmentItems = line.substring(0, line.length / 2).toList
+          val secondCompartmentItems = line.substring(line.length / 2).toList
           Rucksack(firstCompartmentItems, secondCompartmentItems)
         }
       )
