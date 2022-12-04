@@ -1,13 +1,20 @@
 package service
 
 import domain.Assignment
+import domain.OverlapCountingStrategy
+import domain.OverlapCountingStrategy.*
 
-class SectionAssignmentOverlapCounter {
+trait SectionAssignmentOverlapCounter {
 
-  def countOverlappedAssignments(assignments: Array[List[Assignment]]): Int =
-    assignments.count(pair => {
-      val first = pair.head
-      val second = pair(1)
-      first.union(second).size.equals(first.size.max(second.size))
-    })
+  def countOverlappedAssignments(assignments: Array[List[Assignment]]): Int
 }
+
+object SectionAssignmentOverlapCounter  {
+  def apply(strategy: OverlapCountingStrategy): SectionAssignmentOverlapCounter = {
+    strategy match {
+      case Total => SectionAssignmentTotalOverlapCounter()
+      case Partial =>  SectionAssignmentPartialOverlapCounter()
+    }
+  }
+}
+

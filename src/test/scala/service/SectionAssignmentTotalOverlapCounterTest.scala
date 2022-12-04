@@ -3,9 +3,9 @@ package service
 import domain.Assignment
 import munit.FunSuite
 
-class SectionAssignmentOverlapCounterTest extends FunSuite {
+class SectionAssignmentTotalOverlapCounterTest extends FunSuite {
 
-  private val counter: SectionAssignmentOverlapCounter = SectionAssignmentOverlapCounter()
+  private val counter: SectionAssignmentTotalOverlapCounter = SectionAssignmentTotalOverlapCounter()
 
   test("Counter returns the correct amount of overlapped pairs for the given input") {
     assertEquals(counter.countOverlappedAssignments(getAssignments), 2)
