@@ -2,7 +2,7 @@ package service
 
 import munit.FunSuite
 
-class GiantCargoCraneTest extends FunSuite {
+class GiantCargoCrane9000Test extends FunSuite {
 
   private val input = """|    [D]
                          |[N] [C]
@@ -18,7 +18,7 @@ class GiantCargoCraneTest extends FunSuite {
 
   private val stackParser = CrateStackParser()
   private val movementParser = CrateMovementParser()
-  private val crane = GiantCargoCrane()
+  private val crane = GiantCargoCrane9000()
 
   test("Stacks after rearrangement are correct") {
     var cargoDeck = stackParser.getCargoDeckLayout(input)

@@ -1,12 +1,15 @@
 package service
 
-import domain.{CargoDeck, Movement}
+import domain.{CargoDeck, CraneModel, Movement}
+import domain.CraneModel.*
 
-class GiantCargoCrane:
+trait GiantCargoCrane:
 
-  def rearrangeCrates(movements: Array[Movement], cargoDeck: CargoDeck): CargoDeck =
-    val result = cargoDeck.clone
-    movements.foreach(move => {
-      1 to move.numCrates foreach { _ => result(move.endStack).push(result(move.initialStack).pop()) }
-    })
-    result
+  def rearrangeCrates(movements: Array[Movement], cargoDeck: CargoDeck): CargoDeck
+
+object GiantCargoCrane:
+
+  def apply(model: CraneModel): GiantCargoCrane =
+    model match
+      case Model9000 => GiantCargoCrane9000()
+      case Model9001 => GiantCargoCrane9001()

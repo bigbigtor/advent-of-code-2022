@@ -12,4 +12,8 @@ class Day5Test extends FunSuite {
   test("Day 5 part 1 is solved correctly") {
     assertEquals(day5.part1(input), "HBTMTBSDC")
   }
+
+  test("Day 5 part 2 is solved correctly") {
+    assertEquals(day5.part2(input), "PQTJRSHWS")
+  }
 }
