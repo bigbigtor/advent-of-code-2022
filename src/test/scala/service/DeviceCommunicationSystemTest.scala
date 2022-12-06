@@ -16,4 +16,16 @@ class DeviceCommunicationSystemTest extends FunSuite {
   test("First start-of-packet marker is not found") {
     assertEquals(device.lockOnSignal("aaabbb"), -1)
   }
+
+  test("First start-of-message marker is found correctly") {
+    assertEquals(device.lookForMessage("mjqjpqmgbljsphdztnvjfqwrcgsmlb"), 19)
+    assertEquals(device.lookForMessage("bvwbjplbgvbhsrlpgdmjqwftvncz"), 23)
+    assertEquals(device.lookForMessage("nppdvjthqldpwncqszvftbrmjlhg"), 23)
+    assertEquals(device.lookForMessage("nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg"), 29)
+    assertEquals(device.lookForMessage("zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw"), 26)
+  }
+
+  test("First start-of-message marker is not found") {
+    assertEquals(device.lookForMessage("aaabbbcccdddeeefffggghhhiii"), -1)
+  }
 }
