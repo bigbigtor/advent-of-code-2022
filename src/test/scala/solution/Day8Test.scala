@@ -13,4 +13,8 @@ class Day8Test extends AnyFunSuite {
   test("Day 8 part 1 is solved correctly") {
     day8.part1(input) should equal (1814)
   }
+
+  test("Day 8 part 2 is solved correctly") {
+    day8.part2(input) should equal (330786)
+  }
 }

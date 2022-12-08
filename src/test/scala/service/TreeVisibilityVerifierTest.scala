@@ -9,7 +9,7 @@ class TreeVisibilityVerifierTest extends AnyFunSuite {
 
   private val verifier = TreeVisibilityVerifier()
 
-  test("Verifier works for the given input") {
+  test("Verify works for the given input") {
     val map = getMap
     verifier.verify(map, 1, 1) should equal (Set(Left, Top))
     verifier.verify(map, 1, 2) should equal (Set(Right, Top))
@@ -20,6 +20,12 @@ class TreeVisibilityVerifierTest extends AnyFunSuite {
     verifier.verify(map, 3, 2) should equal (Set(Left, Bottom))
     verifier.verify(map, 3, 1) should equal (Set())
     verifier.verify(map, 3, 3) should equal (Set())
+  }
+
+  test("Scenic score is correct for the given input") {
+    val map = getMap
+    verifier.getScenicScore(map, 1, 2) should equal (4)
+    verifier.getScenicScore(map, 3, 2) should equal (8)
   }
 
   private def getMap: PlantationMap =

@@ -18,4 +18,13 @@ class Day8 {
             tree.visibleFrom.nonEmpty
           })
       }).sum
+
+  def part2(input: String): Int =
+    val map = quadcopter.generateMap(input)
+    map.indices
+      .map(row => {
+        map(0).indices
+          .map(col => verifier.getScenicScore(map, row, col))
+          .max
+      }).max
 }

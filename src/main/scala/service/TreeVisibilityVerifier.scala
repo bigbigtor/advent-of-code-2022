@@ -8,10 +8,22 @@ class TreeVisibilityVerifier:
   def verify(map: PlantationMap, row: Int, column: Int): Set[Direction] =
     Direction.values.filter(visible(map, row, column, _)).toSet
 
+  def getScenicScore(map: PlantationMap, row: Int, column: Int): Int =
+    Direction.values.map(getViewingDistance(map, row, column, _)).product
+
   private def visible(map: PlantationMap, row: Int, column: Int, dir: Direction): Boolean =
     val target = map(row)(column)
     val anyTreeBlocks = getPossiblyBlockingTrees(map, row, column, dir).exists(_.height >= target.height)
     !anyTreeBlocks
+
+  private def getViewingDistance(map: PlantationMap, row: Int, col: Int, dir: Direction): Int =
+    val target = map(row)(col)
+    val treesInLine = getPossiblyBlockingTrees(map, row, col, dir)
+    val orderedTrees = dir match
+      case Left | Top => treesInLine.reverse
+      case Right | Bottom => treesInLine
+    val distance = orderedTrees.indexWhere(target.height <= _.height) + 1
+    if (distance == 0) treesInLine.length else distance
 
   private def getPossiblyBlockingTrees(map: PlantationMap, row: Int, col: Int, dir: Direction): Array[Tree] =
     dir match
