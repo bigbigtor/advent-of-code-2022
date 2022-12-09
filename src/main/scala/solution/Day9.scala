@@ -1,6 +1,6 @@
 package solution
 
-import domain.{Rope, RopeEnd}
+import domain.{Rope, Knot}
 import domain.Direction.*
 import service.PlanckLengthSimulator
 
@@ -10,9 +10,13 @@ class Day9 {
 
   private val simulator = PlanckLengthSimulator()
 
-  def part1(input: String): Int =
-    val positionsVisitedByTail = mutable.Set[RopeEnd](RopeEnd(0, 0))
-    var rope = Rope(RopeEnd(0, 0), RopeEnd(0, 0))
+  def part1(input: String): Int = simulate(input, 2)
+   
+  def part2(input: String): Int = simulate(input, 10)
+
+  private def simulate(input: String, ropeSize: Int): Int =
+    val positionsVisitedByTail = mutable.Set[Knot](Knot(0, 0))
+    var rope = Rope(Array.fill(ropeSize)(Knot(0, 0)))
     val movements = input.split("\n")
       .flatMap(line => {
         val Array(dir, steps) = line.split(" ")
@@ -27,7 +31,7 @@ class Day9 {
       ).toList
     for (movement <- movements) {
       rope = simulator.applyMovement(movement, rope)
-      positionsVisitedByTail.add(rope.tail)
+      positionsVisitedByTail.add(rope.knots.last)
     }
     positionsVisitedByTail.size
 }

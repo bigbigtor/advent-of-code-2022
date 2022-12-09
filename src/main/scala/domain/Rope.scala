@@ -1,3 +1,3 @@
 package domain
 
-case class Rope(head: RopeEnd, var tail: RopeEnd)
+case class Rope(knots: Array[Knot])
