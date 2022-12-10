@@ -158,18 +158,20 @@ class SignalStrengthSamplerTest extends AnyFunSuite, BeforeAndAfterEach {
 
   private val parser: CpuInstructionParser = CpuInstructionParser()
 
+  private val crt: Crt = Crt()
+
   private val inst: mutable.Queue[Op] = mutable.Queue[Op]()
 
   private var cpu: Cpu = Cpu(inst)
 
-  private var clock: ClockCircuit = ClockCircuit(cpu)
+  private var clock: ClockCircuit = ClockCircuit(cpu, crt)
 
   private val sampler: SignalStrengthSampler = SignalStrengthSampler()
 
   override def beforeEach(): Unit =
     inst ++= parser.parse(input).toList
     cpu = Cpu(inst)
-    clock = ClockCircuit(cpu)
+    clock = ClockCircuit(cpu, crt)
 
   test("The sum of signal strengths is correct for the given input") {
     sampler.getSumOfStrengths(clock, cpu) should equal (13140)
