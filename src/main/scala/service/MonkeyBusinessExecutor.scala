@@ -2,13 +2,12 @@ package service
 
 import domain.Monkey
 import domain.MonkeyOp.*
-import domain.MonkeyTest.DivBy
 
-class MonkeyBusinessExecutor(monkeys: Array[Monkey]):
+class MonkeyBusinessExecutor(monkeys: Array[Monkey], reliefFunction: Long => Long):
 
-  def getLevel: Int =
-    monkeys.map(_.numInspections).sorted.reverse.take(2).product
-    
+  def getLevel: Long =
+    monkeys.map(_.numInspections.toLong).sorted.reverse.take(2).product
+
   def executeRound(): Unit =
     monkeys.foreach(executeTurn)
 
@@ -23,9 +22,8 @@ class MonkeyBusinessExecutor(monkeys: Array[Monkey]):
           case Square => itemToInspect * itemToInspect
           case Mul(v) => itemToInspect * v
           case Sum(v) => itemToInspect + v
-        val relievedLevel = Math.floorDiv(worryLevel, 3)
-        val testResult = monkey.test match
-          case DivBy(v) => (relievedLevel % v) == 0
+        val relievedLevel = reliefFunction.apply(worryLevel)
+        val testResult = (relievedLevel % monkey.test) == 0
         val targetMonkey = monkeys(if (testResult) monkey.targetIfTrue else monkey.targetIfFalse)
         targetMonkey.items.enqueue(relievedLevel)
       })

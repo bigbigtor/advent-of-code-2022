@@ -2,7 +2,7 @@ package service
 
 import domain.MonkeyOp.*
 import domain.MonkeyTest.DivBy
-import domain.{Monkey, MonkeyOp, MonkeyTest, WorryLevel}
+import domain.{Monkey, MonkeyOp, WorryLevel}
 
 import scala.collection.mutable
 
@@ -35,9 +35,9 @@ class MonkeyParser:
       case s"old * ${value}" => Mul(value.toInt)
       case s"old + ${value}" => Sum(value.toInt)
 
-  private def parseTest(input: String): MonkeyTest =
+  private def parseTest(input: String): Long =
     input.replaceAll("Test: ", "") match
-      case s"divisible by ${value}" => DivBy(value.toInt)
+      case s"divisible by ${value}" => value.toLong
 
   private def parseTrueAction(input: String): Int =
     input.replaceAll("If true: throw to monkey ", "").toInt

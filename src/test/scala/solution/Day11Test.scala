@@ -13,4 +13,8 @@ class Day11Test extends AnyFunSuite {
   test("Day 11 part 1 is solved correctly") {
     day11.part1(input) should equal(55930)
   }
+
+  test("Day 11 part 2 is solved correctly") {
+    day11.part2(input) should equal(14636993466L)
+  }
 }

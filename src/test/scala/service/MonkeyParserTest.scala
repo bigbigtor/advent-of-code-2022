@@ -2,7 +2,6 @@ package service
 
 import domain.Monkey
 import domain.MonkeyOp.*
-import domain.MonkeyTest.DivBy
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers.{equal, should}
 
@@ -46,9 +45,9 @@ class MonkeyParserTest extends AnyFunSuite {
 
   private def getExpectedMonkeys: Array[Monkey] =
     Array(
-      Monkey(mutable.Queue(79, 98), Mul(19), DivBy(23), 2, 3),
-      Monkey(mutable.Queue(54, 65, 75, 74), Sum(6), DivBy(19), 2, 0),
-      Monkey(mutable.Queue(79, 60, 97), Square, DivBy(13), 1, 3),
-      Monkey(mutable.Queue(74), Sum(3), DivBy(17), 0, 1)
+      Monkey(mutable.Queue(79, 98), Mul(19), 23, 2, 3),
+      Monkey(mutable.Queue(54, 65, 75, 74), Sum(6), 19, 2, 0),
+      Monkey(mutable.Queue(79, 60, 97), Square, 13, 1, 3),
+      Monkey(mutable.Queue(74), Sum(3), 17, 0, 1)
     )
 }
