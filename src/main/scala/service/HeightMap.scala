@@ -13,7 +13,15 @@ class HeightMap():
   private var heights: Array[Height] = Array()
   private var distances: Array[Int] = Array()
 
-  def getDistanceToEnd: Int = distances(end)
+  def getDistanceToEnd: Int = distances(start)
+
+  def getShorterDistanceFromLowestElevations: Int =
+    val minElevation = heights.min
+    val lowestElevationPositions = heights.indices
+      .filter(pos => heights(pos) == minElevation)
+    val lowestElevationDistances = lowestElevationPositions.map(distances)
+    lowestElevationDistances.filter(dist => dist >= 0).min
+
 
 object HeightMap:
 
@@ -24,10 +32,10 @@ object HeightMap:
     heightMap.start = getStart(input)
     heightMap.end = getEnd(input)
     heightMap.heights = getHeights(input)
-    heightMap.distances = getDistances(
+    heightMap.distances = getDistancesFromEnd(
       heightMap.mapWidth,
       heightMap.mapHeight,
-      heightMap.start,
+      heightMap.end,
       heightMap.heights)
     heightMap
 
@@ -47,7 +55,7 @@ object HeightMap:
         })
       })
 
-  private def getDistances(w: Int, h: Int, start: Int, heights: Array[Height]): Array[Int] =
+  private def getDistancesFromEnd(w: Int, h: Int, start: Int, heights: Array[Height]): Array[Int] =
     val visitedPositions = mutable.Set[Int]()
     val distances = Array.fill(heights.length)(Int.MaxValue)
     distances(start) = 0
@@ -74,4 +82,4 @@ object HeightMap:
       (x + 1, y))
       .filter((x, y) => (0 until w).contains(x) && (0 until h).contains(y))
       .map((x, y) => (y * w) + x)
-      .filter(adj => (heights(adj) - heights(pos)) <= 1)
+      .filter(adj => (heights(pos) - heights(adj)) <= 1)

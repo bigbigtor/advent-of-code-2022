@@ -14,8 +14,11 @@ class HeightMapTest extends AnyFunSuite {
 
   private val expectedDistance = 31
 
+  private val expectedMinLowerElevationDistance = 29
+
   test("Distance from start to end position is correct for the given input") {
     val heightMap = HeightMap(input)
     heightMap.getDistanceToEnd should equal (expectedDistance)
+    heightMap.getShorterDistanceFromLowestElevations should equal (expectedMinLowerElevationDistance)
   }
 }
