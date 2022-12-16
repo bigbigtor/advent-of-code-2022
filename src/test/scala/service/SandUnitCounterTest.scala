@@ -15,8 +15,15 @@ class SandUnitCounterTest extends AnyFunSuite {
 
   private val expectedSandUnitCount = 24
 
+  private val expectedSandUnitCountWithFloor = 93
+
   test("Sand unit count is correct for the given input") {
     val cave = scanner.scan(initialCave)
     counter.count(cave) should equal (expectedSandUnitCount)
+  }
+
+  test("Sand unit count with floor is correct for the given input") {
+    val cave = scanner.scanCompleteCave(initialCave, 2)
+    counter.count(cave) should equal(expectedSandUnitCountWithFloor)
   }
 }

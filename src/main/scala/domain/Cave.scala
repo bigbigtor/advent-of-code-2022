@@ -17,10 +17,6 @@ class Cave(elements: Array[Array[CaveElement]]):
         Some(elements(y)(x))
       case _ => None
 
-  def getBottommostRockPos: Int = elements.length - 1
-
-  def getRightmostRockPos: Int = elements(0).length - 1
-
   def restSand(x: Int, y: Int): Unit = elements(y)(x) = Sand
 
   def countSand: Int = elements.flatten.count(_ == Sand)
@@ -40,4 +36,14 @@ object Cave:
       elements(y)(x) = if (rockPositions.contains((x + closestRockX, y))) Rock else Air
       //x positions corrected since we don't care what's left or right of the rocks
     elements(0)(500 - closestRockX) = SandSource
+    new Cave(elements)
+
+  def apply(rockPositions: Set[(Int, Int)], floorOffset: Int): Cave =
+    val yMax = rockPositions.map(_._2).max + floorOffset
+    val xMax = 2 * (yMax + 1)
+    val elements = Array.ofDim[CaveElement](yMax + 1, xMax + 1)
+    for (x <- 0 to xMax; y <- 0 until yMax)
+      elements(y)(x) = if (rockPositions.contains((500 - (yMax + 1 - x), y))) Rock else Air
+    elements(yMax) = Array.fill(xMax + 1)(Rock)
+    elements(0)(yMax + 1) = SandSource
     new Cave(elements)

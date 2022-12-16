@@ -9,6 +9,10 @@ class Scanner:
     val rockPositions = input.split("\n").flatMap(parseRow).toSet
     Cave(rockPositions)
 
+  def scanCompleteCave(input: String, floorOffset: Int): Cave =
+    val rockPositions = input.split("\n").flatMap(parseRow).toSet
+    Cave(rockPositions, floorOffset)
+
   private def parseRow(row: String): Set[(Int, Int)] =
     row.split(" -> ")
       .map(_.split(","))
