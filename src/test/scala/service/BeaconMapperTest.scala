@@ -41,4 +41,12 @@ class BeaconMapperTest extends AnyFunSuite {
   test("Non beacon positions are correct for the given readings") {
     mapper.getNonBeaconPositionsForRow(readings, 10) should equal (26)
   }
+
+  test("Minimum non-beacon ranges are correct for the given readings and row") {
+    mapper.getMinimumNonBeaconRanges(readings, 10) should equal (List(-2 to 1, 3 to 24))
+  }
+
+  test("Get tuning frequency works for the given readings") {
+    mapper.getTuningFrequencies(readings, 0, 20) should equal (Array(60000003, 8000010, 56000011, 40000016))
+  }
 }
