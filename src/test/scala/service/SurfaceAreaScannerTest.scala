@@ -18,10 +18,14 @@ class SurfaceAreaScannerTest extends AnyFunSuite {
                         |3,2,5
                         |2,1,5
                         |2,3,5""".stripMargin
-  
+
   private val scanner = SurfaceAreaScanner()
-  
+
   test("Surface area is correct for the given input") {
     scanner.scan(input) should equal (64)
+  }
+
+  test("Exterior surface area is correct for the given input") {
+    scanner.scanExteriorSurface(input) should equal(58)
   }
 }
