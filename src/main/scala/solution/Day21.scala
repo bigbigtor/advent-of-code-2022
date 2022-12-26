@@ -5,8 +5,10 @@ import service.{MonkeyMathExecutor, MonkeyMathParser}
 class Day21 {
 
   private val parser = MonkeyMathParser()
-  
+
   private val executor = MonkeyMathExecutor()
-  
-  def part1(input: String): Long = executor.compute(parser.parse(input))
+
+  def part1(input: String): Long = executor.compute(parser.parse(input), "root")
+
+  def part2(input: String): Long = executor.compute(parser.correctParse(input), "humn")
 }

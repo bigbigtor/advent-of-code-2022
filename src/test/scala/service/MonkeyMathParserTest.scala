@@ -23,20 +23,37 @@ class MonkeyMathParserTest extends AnyFunSuite {
                         |hmdt: 32""".stripMargin
 
   private val expectedEquations = Seq(
-    ("root", TwoValueSum("pppw", "sjmn")),
+    ("root", TwoValueSum(Variable("pppw"), Variable("sjmn"))),
     ("dbpl", Value(5)),
-    ("cczh", TwoValueSum("sllz", "lgvd")),
+    ("cczh", TwoValueSum(Variable("sllz"), Variable("lgvd"))),
     ("zczc", Value(2)),
-    ("ptdq", TwoValueSub("humn", "dvpt")),
+    ("ptdq", TwoValueSub(Variable("humn"), Variable("dvpt"))),
     ("dvpt", Value(3)),
     ("lfqf", Value(4)),
     ("humn", Value(5)),
     ("ljgn", Value(2)),
-    ("sjmn", TwoValueMul("drzm", "dbpl")),
+    ("sjmn", TwoValueMul(Variable("drzm"), Variable("dbpl"))),
     ("sllz", Value(4)),
-    ("pppw", TwoValueDiv("cczh", "lfqf")),
-    ("lgvd", TwoValueMul("ljgn", "ptdq")),
-    ("drzm", TwoValueSub("hmdt", "zczc")),
+    ("pppw", TwoValueDiv(Variable("cczh"), Variable("lfqf"))),
+    ("lgvd", TwoValueMul(Variable("ljgn"), Variable("ptdq"))),
+    ("drzm", TwoValueSub(Variable("hmdt"), Variable("zczc"))),
+    ("hmdt", Value(32))
+  )
+
+  private val expectedCorrectEquations = Seq(
+    ("root", Match(Variable("pppw"), Variable("sjmn"))),
+    ("dbpl", Value(5)),
+    ("cczh", TwoValueSum(Variable("sllz"), Variable("lgvd"))),
+    ("zczc", Value(2)),
+    ("ptdq", TwoValueSub(Variable("humn"), Variable("dvpt"))),
+    ("dvpt", Value(3)),
+    ("lfqf", Value(4)),
+    ("ljgn", Value(2)),
+    ("sjmn", TwoValueMul(Variable("drzm"), Variable("dbpl"))),
+    ("sllz", Value(4)),
+    ("pppw", TwoValueDiv(Variable("cczh"), Variable("lfqf"))),
+    ("lgvd", TwoValueMul(Variable("ljgn"), Variable("ptdq"))),
+    ("drzm", TwoValueSub(Variable("hmdt"), Variable("zczc"))),
     ("hmdt", Value(32))
   )
 
@@ -44,5 +61,9 @@ class MonkeyMathParserTest extends AnyFunSuite {
 
   test("Parser returns expected entries") {
     parser.parse(input) shouldBe expectedEquations
+  }
+
+  test("Correct parser returns expected entries") {
+    parser.correctParse(input) shouldBe expectedCorrectEquations
   }
 }
