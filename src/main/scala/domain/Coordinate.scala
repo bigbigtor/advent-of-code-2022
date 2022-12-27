@@ -1,3 +1,3 @@
 package domain
 
-case class Coordinate(num: Int)
+case class Coordinate(num: Long)

@@ -25,27 +25,27 @@ class CoordinateDecrypter:
         ++ list.slice(elemPos, elemPos + 1)
         ++ list.slice(elemPos + 1, list.length)
 
-  def parse(input: String): List[Coordinate] =
+  def parse(input: String, key: Long): List[Coordinate] =
     input.split("\n")
-      .map(c => Coordinate(c.toInt))
+      .map(c => Coordinate(c.toLong * key))
       .toList
 
-  def mix(coords: List[Coordinate]): List[Coordinate] =
+  def mix(coords: List[Coordinate], times: Int): List[Coordinate] =
+    var result = coords
     val pending = mutable.Queue[Coordinate]()
     val module = coords.length - 1
-    coords.foreach(pending.enqueue)
-    var result = coords
+    (0 until times).foreach(_ => coords.foreach(pending.enqueue))
     while (pending.nonEmpty)
       val coord = pending.dequeue()
       val pos = result.zipWithIndex.filter((c, _) => c eq coord).head._2
-      val endPos = (((pos + coord.num) % module) + module) % module
+      val endPos = ((((pos + coord.num) % module) + module) % module).toInt
       result = pos.compare(endPos) match
         case r if r < 0 => shiftForward.apply(endPos, result, pos)
         case r if r > 0 => shiftBackward.apply(endPos, result, pos)
         case r if r == 0 => noShift.apply(result, pos)
     result
 
-  def extractGroveCoords(coords: List[Coordinate]): Int =
+  def extractGroveCoords(coords: List[Coordinate]): Long =
     val baseIdx = coords
       .zipWithIndex
       .find((c, _) => c.num == 0)
