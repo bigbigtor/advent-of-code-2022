@@ -18,17 +18,22 @@ class ElfSpreadSimulator:
 
   def getEmptyGroundTiles(elves: Array[ElfPlanter], rounds: Int): Int =
     for (round <- 1 to rounds)
-      val positions = elves.map(e => (e.xPos, e.yPos)).toSet
-      val proposedMoves = elves
-        .indices
-        .map(i => (i, getProposedMove(elves(i), positions, round)))
-        .toMap
+      val proposedMoves = getProposedMoves(elves, round)
       val uniqueMoves = getUniqueMoves(proposedMoves)
-      elves.indices
-        .filter(i => uniqueMoves.contains(proposedMoves(i)))
-        .foreach(i => elves(i) = ElfPlanter(proposedMoves(i)._1, proposedMoves(i)._2))
+      updateElfPositions(elves, proposedMoves, uniqueMoves)
     calculateEmptyTiles(elves)
 
+  def getFirstRoundWithNoMovement(elves: Array[ElfPlanter]): Int =
+    var found = false
+    var currentRound = 0
+    while(!found)
+      currentRound += 1
+      val proposedMoves = getProposedMoves(elves, currentRound)
+      val uniqueMoves = getUniqueMoves(proposedMoves)
+      found = elves.indices.forall(i =>
+        uniqueMoves.contains(proposedMoves(i)) && proposedMoves(i) == (elves(i).xPos, elves(i).yPos))
+      updateElfPositions(elves, proposedMoves, uniqueMoves)
+    currentRound
 
   def parse(input: String): Array[ElfPlanter] =
     input.split("\n")
@@ -39,6 +44,22 @@ class ElfSpreadSimulator:
           .filter((c, _) => c == '#')
           .map((_, x) => ElfPlanter(x, y))
       )
+
+  private def getProposedMoves(elves: Array[ElfPlanter], currentRound: Int) =
+    val positions = elves.map(e => (e.xPos, e.yPos)).toSet
+    elves
+      .indices
+      .map(i => (i, getProposedMove(elves(i), positions, currentRound)))
+      .toMap
+
+  private def updateElfPositions(
+                                  elves: Array[ElfPlanter],
+                                  proposedMoves: Map[Int, (Int, Int)],
+                                  uniqueMoves: Set[(Int, Int)]
+                                ): Unit =
+    elves.indices
+      .filter(i => uniqueMoves.contains(proposedMoves(i)))
+      .foreach(i => elves(i) = ElfPlanter(proposedMoves(i)._1, proposedMoves(i)._2))
 
   private def getUniqueMoves(proposedMoves: Map[Int, (Int, Int)]): Set[(Int, Int)] =
     proposedMoves

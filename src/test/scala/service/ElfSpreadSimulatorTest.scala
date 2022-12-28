@@ -16,7 +16,7 @@ class ElfSpreadSimulatorTest extends AnyFunSuite {
                         |##.#.##
                         |.#..#..""".stripMargin
 
-  private val elves = Array(
+  private def elves = Array(
     ElfPlanter(1, 0),
     ElfPlanter(4, 0),
     ElfPlanter(0, 1),
@@ -43,11 +43,17 @@ class ElfSpreadSimulatorTest extends AnyFunSuite {
 
   private val emptyTiles = 110
 
+  private val staticRound = 20
+
   test("Parse returns the expected set of elves") {
     simulator.parse(input) shouldBe elves
   }
 
   test("Grid size is correct for simulation with the given elves") {
     simulator.getEmptyGroundTiles(elves, 10) shouldBe emptyTiles
+  }
+
+  test("First round with no movement is correct for simulation with the given elves") {
+    simulator.getFirstRoundWithNoMovement(elves) shouldBe staticRound
   }
 }
