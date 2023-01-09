@@ -8,7 +8,12 @@ type Valley = Array[Array[Array[Tile]]]
 
 class BlizzardValleySolver:
 
-  def getStepsFromStartToEnd(valley: Valley, start: Pos, end: (Int, Int)): Int =
+  def getMinutesIncludingSnackRoundTrip(valley: Valley, start: Pos, end: (Int, Int)): Int =
+    val firstTripMinutes = getMinutesFromStartToEnd(valley, (start._1, start._2, 0), end)
+    val secondTripMinutes = getMinutesFromStartToEnd(valley, (end._1, end._2, firstTripMinutes), (start._1, start._2))
+    getMinutesFromStartToEnd(valley, (start._1, start._2, secondTripMinutes), end)
+
+  def getMinutesFromStartToEnd(valley: Valley, start: Pos, end: (Int, Int)): Int =
     val q = mutable.Queue[Pos](start)
     val exploredPositions = mutable.Set(start)
     while (q.nonEmpty)

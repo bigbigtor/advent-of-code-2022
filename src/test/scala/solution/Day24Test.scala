@@ -13,4 +13,8 @@ class Day24Test extends AnyFunSuite {
   test("Day 24 part 1 is solved correctly") {
     day24.part1(input) should equal(283)
   }
+
+  test("Day 24 part 2 is solved correctly") {
+    day24.part2(input) should equal(883)
+  }
 }

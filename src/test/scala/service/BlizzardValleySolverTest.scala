@@ -155,11 +155,15 @@ class BlizzardValleySolverTest extends AnyFunSuite {
 
   private val solver = BlizzardValleySolver()
 
-  test("Test minimum required steps is correct for given valley") {
-    solver.getStepsFromStartToEnd(valley, (1, 0, 0), (5, 6)) shouldBe 10
+  test("Test minimum required minutes is correct for given valley") {
+    solver.getMinutesFromStartToEnd(valley, (1, 0, 0), (5, 6)) shouldBe 10
   }
 
-  test("Test minimum required steps is correct for given blizzard filled valley") {
-    solver.getStepsFromStartToEnd(blizzardFilledValley, (1, 0, 0), (6, 5)) shouldBe 18
+  test("Test minimum required minutes is correct for given blizzard filled valley") {
+    solver.getMinutesFromStartToEnd(blizzardFilledValley, (1, 0, 0), (6, 5)) shouldBe 18
+  }
+
+  test("Test minimum required minutes is correct for given blizzard filled valley with snack round trip") {
+    solver.getMinutesIncludingSnackRoundTrip(blizzardFilledValley, (1, 0, 0), (6, 5)) shouldBe 54
   }
 }
